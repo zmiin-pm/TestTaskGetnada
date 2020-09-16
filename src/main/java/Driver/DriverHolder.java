@@ -22,14 +22,14 @@ public enum DriverHolder {
     // Use enum DriverType and PageFactory to init one of Chrome, Opera or Firefox Webdriver
     // Also explicit and implicit waits are defining here
 
-    public WebDriver initDriver( int implicitlyWait, int explicitlyWait) {
+    public WebDriver initDriver(int implicitlyWait, int explicitlyWait) {
         try {
             driver = DriverFactory.setDriver();
         } catch (Exception e) {
             driver = DriverFactory.setDriver(DriverType.CHROME);
         }
         driver.manage().timeouts().implicitlyWait(implicitlyWait, TimeUnit.SECONDS);  // implicit waits work always when you use FindElements
-        webDriverWait = new WebDriverWait(driver, explicitlyWait, explicitlyWait / 2 * 10); // need to use in case singlePage app
+        webDriverWait = new WebDriverWait(driver, explicitlyWait, explicitlyWait / 5); // need to use in case singlePage app
         driver.manage().window().maximize();                                         // or for wait element to be clickable or smth
         return driver;
     }

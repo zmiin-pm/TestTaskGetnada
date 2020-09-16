@@ -6,23 +6,18 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public abstract class BasePage {
-    protected BasePage(){
-        PageFactory.initElements(DriverHolder.INSTANCE.getDriver(),this);
+    protected BasePage() {
+        PageFactory.initElements(DriverHolder.INSTANCE.getDriver(), this);
     }
 
     protected abstract BasePage open(String url);
 
-    protected BasePage waitForVisible(WebElement webElement){
+    protected BasePage waitForVisible(WebElement webElement) {
         DriverHolder.INSTANCE.getWebDriverWait()
                 .until(ExpectedConditions
                         .visibilityOf(webElement));
         return this;
     }
 
-    protected BasePage waitUntilNotNull(WebElement webElement){
-        DriverHolder.INSTANCE.getWebDriverWait()
-                .until(ExpectedConditions
-                        .textToBePresentInElement(webElement, "\\*"));
-        return this;
-    }
+
 }

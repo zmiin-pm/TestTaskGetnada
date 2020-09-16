@@ -1,42 +1,57 @@
 import API.RestApi;
-import Driver.DriverHolder;
 import Gmail.MailSender;
 import Pages.TempMailPage;
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
-import org.jsoup.Connection;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.util.List;
+public class TestClass extends BaseTest {
 
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.notNullValue;
-
-public class TestClass extends BaseTest{
-
-    @Test
-    public void firstTest(){
-        TempMailPage tempMailPage = new TempMailPage()
-                .open("https://getnada.com");
-        String tempMailAddress = tempMailPage.getMailAddress();
-        String randomCat =  RestApi.getLink(
-                RestApi.sendGetRequest("https://aws.random.cat/meow"));
-        String randomDog =  RestApi.getLink(
-                RestApi.sendGetRequest("https://random.dog/woof.json"));
-        String randomFox =  RestApi.getLink(
-                RestApi.sendGetRequest("https://randomfox.ca/floof/"));
-        String mailBody =  randomCat + "\n"
-                + randomDog + "\n"
-                + randomFox + "\n";
-        MailSender ms = new MailSender();
-        ms.mailSend(tempMailAddress, mailBody);
-        List<String> list = tempMailPage.openMail().getMessageFromMail();
-        Assert.assertEquals(list.get(0), randomCat );
-        Assert.assertEquals(list.get(1), randomDog);
-        Assert.assertEquals(list.get(2), randomFox);
+    @Test(priority = 0)
+    public void sendGetRequestAndGetResponseRandomCat() {
+        responseRandomCat = RestApi.sendGetRequest("https://aws.random.cat/meow");
+        Assert.assertEquals(responseRandomCat.getStatusCode(), 200);
     }
 
+    @Test(priority = 1)
+    public void sendGetRequestAndGetResponseRandomDog() {
+        responseRandomDog = RestApi.sendGetRequest("https://random.dog/woof.json");
+        Assert.assertEquals(responseRandomDog.getStatusCode(), 200);
+    }
+
+    @Test(priority = 2)
+    public void sendGetRequestAndGetResponseRandomFox() {
+        responseRandomFox = RestApi.sendGetRequest("https://randomfox.ca/floof/");
+        Assert.assertEquals(responseRandomFox.getStatusCode(), 200);
+    }
+
+    @Test(priority = 3)
+    public void createTempMail() {
+        tempMailPage = new TempMailPage()
+                .open("https://getnada.com");
+        tempMailAddress = tempMailPage.getMailAddress();
+        Assert.assertTrue(!tempMailAddress.isEmpty(), "Mail address is empty");
+    }
+
+    @Test(priority = 4)
+    public void getLinksFromResponses() {
+        randomCat = RestApi.getLink(responseRandomCat);
+        randomDog = RestApi.getLink(responseRandomDog);
+        randomFox = RestApi.getLink(responseRandomFox);
+        Assert.assertTrue(!randomCat.isEmpty(), "Cat link is empty");
+        Assert.assertTrue(!randomDog.isEmpty(), "Dog link is empty");
+        Assert.assertTrue(!randomFox.isEmpty(), "Fox link is empty");
+    }
+
+    @Test(priority = 5)
+    public void sendMailRecieveMailCompareLinks() {
+        String mailBody = randomCat + "\n"
+                + randomDog + "\n"
+                + randomFox + "\n";
+        new MailSender().mailSend(tempMailAddress, mailBody);
+        linksFromMail = tempMailPage.openMail().getMessageFromMail();
+        Assert.assertEquals(linksFromMail.get(0), randomCat);
+        Assert.assertEquals(linksFromMail.get(1), randomDog);
+        Assert.assertEquals(linksFromMail.get(2), randomFox);
+    }
 }
 

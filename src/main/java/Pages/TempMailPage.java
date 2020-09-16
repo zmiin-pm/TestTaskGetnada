@@ -4,6 +4,7 @@ import Driver.DriverHolder;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,43 +23,35 @@ public class TempMailPage extends BasePage {
     @FindBy(xpath = "//body")
     private WebElement frameBody;
 
+    @FindBy(xpath = "//body/span")
+    private WebElement frameSpan;
+
     public TempMailPage open(String url) {
         DriverHolder.INSTANCE.getDriver().get(url);
         return this;
     }
 
     public String getMailAddress() {
-//        waitForVisible(mailAddress);
-//        System.out.println(waitForVisible(mailAddress));
-        String s;
+        String address;
         try {                                           // to except StaleReferenceElementException
-            s = mailAddress.getText();
+            address = mailAddress.getText();
         } catch (StaleElementReferenceException e) {
-            s = mailAddress.getText();
+            address = mailAddress.getText();
         }
-        return s;
+        return address;
     }
 
-    public TempMailPage openMail(){
+    public TempMailPage openMail() {
         waitForVisible(mailItem);
         mailItem.click();
         return this;
     }
 
-    public List<String> getMessageFromMail(){
+    public List<String> getMessageFromMail() {
         DriverHolder.INSTANCE.getDriver()
                 .switchTo().frame(iFrame);
-//        try {
-//            Thread.sleep(10000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-        waitUntilNotNull(frameBody);
-        System.out.println("Body: " + frameBody.getText());
-        System.out.println(Arrays.asList(
-                frameBody
-                        .getText()
-                        .split("\\s")));
+        DriverHolder.INSTANCE.getWebDriverWait()            // Only firefox needed it to wait for messages loading
+                .until(ExpectedConditions.visibilityOf(frameSpan));
         return Arrays.asList(
                 frameBody
                         .getText()
