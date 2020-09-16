@@ -1,5 +1,5 @@
 # TestTaskGetnada
-There is a test-automation framewor in accordance to the Test Task.
+There is a test-automation framework in accordance to the Test Task.
 Test steps are:
 1. Send RestApi GET requests and confirm that responses are avaliable (3 test methods);
 2. Open temp mail page, save mail address and check that it is not empty(1 test method);
@@ -27,7 +27,7 @@ Getting Started
 Clone this repository to your local machine with command:
 "git clone https://github.com/zmiin-pm/TestTaskGetnada.git".
 
-Copy or create file with credetials of gmail account in ..TestTaskGetnada\src\main\resources folder.
+Copy or create file with credetials of gmail account in '..TestTaskGetnada\src\main\resources' folder.
 Filename must be 'credentionals' without file extension.
 File must contain two strings: 
 1 - email address ('emailaddress@gmail.com' for example);
@@ -37,6 +37,6 @@ Go to the root project folder ('E:\...\TestTaskGetnada' for example)
 
 To run test from console please execute: 
 
-"mvn clean test" - Chrome browser will be used
-"mvn clean test -Ddriver.type=opera" - Opera browser will be used
-"mvn clean test -Ddriver.type=firefox" - Firefox browser will be used
+'mvn clean test' - Chrome browser will be used
+'mvn clean test -Ddriver.type=opera' - Opera browser will be used
+'mvn clean test -Ddriver.type=firefox' - Firefox browser will be used
