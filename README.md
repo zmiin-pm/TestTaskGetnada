@@ -10,7 +10,7 @@ After test there is browsing by links and making screenshots. Screenshots will b
 
 Tools
 
-IntelliJ IDEA;
+IntelliJ IDEA; 
 Maven 3.6.3;
 Git 2.25.0.windows.1;
 
@@ -31,12 +31,12 @@ Copy or create file with credetials of gmail account in '..TestTaskGetnada\src\m
 Filename must be 'credentionals' without file extension.
 File must contain two strings: 
 1 - email address ('emailaddress@gmail.com' for example);
-2 - password ('Password123?' for example)
+2 - password ('Password123?' for example).
 
-Go to the root project folder ('E:\...\TestTaskGetnada' for example)
+Go to the root project folder ('E:\...\TestTaskGetnada' for example).
 
 To run test from console please execute: 
 
-'mvn clean test' - Chrome browser will be used
-'mvn clean test -Ddriver.type=opera' - Opera browser will be used
-'mvn clean test -Ddriver.type=firefox' - Firefox browser will be used
+'mvn clean test' - Chrome browser will be used; 
+'mvn clean test -Ddriver.type=opera' - Opera browser will be used;
+'mvn clean test -Ddriver.type=firefox' - Firefox browser will be used;
